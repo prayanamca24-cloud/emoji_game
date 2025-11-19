@@ -4,23 +4,107 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Emoji Movie Puzzle — Audio Clue</title>
+  
   <style>
-    body { font-family: Arial, sans-serif; background:#f3f6fb; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
-    .card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 8px 24px rgba(20,40,80,0.08);width:calc(100% - 40px);max-width:720px}
-    h1{margin:0 0 10px 0;font-size:20px}
-    p{margin:6px 0}
-    .controls{display:flex;gap:8px;align-items:center;margin-top:12px}
-    input[type=text]{flex:1;padding:10px;border-radius:8px;border:1px solid #d0d7e6}
-    button{padding:10px 14px;border-radius:8px;border:none;background:#0b63d6;color:white;cursor:pointer}
-    .small{font-size:13px;color:#556}
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+
+      /* ---- FULL PAGE BACKGROUND IMAGE ---- */
+      background: url("mohan.jpg") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      backdrop-filter: blur(2px);
+    }
+
+    /* ---- GLASS-CARD STYLE ---- */
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      width: calc(100% - 40px);
+      max-width: 720px;
+      color: #fff;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ---- Modern Buttons ---- */
+    button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: #0b63d6;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #084daa;
+      transform: translateY(-2px);
+    }
+
+    /* ---- Input ---- */
+    input[type=text] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    #feedback {
+      margin-top: 10px;
+      color: #ffb3b3;
+      font-weight: 500;
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>🔊 Audio Clue</h1>
-    <p class="small">Listen carefully to the audio. The audio contains the hint for the next movie name. Type the movie name (exact) and press Submit. If correct you will be redirected to the final page.</p>
+    <p>Listen carefully to the audio.</p>
 
-    <!-- Replace "clue-audio.mp3" with your audio filename or URL. If hosting on Netlify/GitHub, place file next to this HTML. -->
     <audio id="audio" preload="auto">
       <source src="kannan.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
@@ -30,12 +114,10 @@
       <button id="play">Play ▶️</button>
       <button id="pause">Pause ⏸️</button>
       <button id="replay">Replay 🔁</button>
-      <span class="small">(Autoplay may be blocked by browser — use Play)</span>
     </div>
 
-    
-
-    <p id="feedback" class="small" style="margin-top:12px;color:#b33"></p>
+  
+    <p id="feedback"></p>
   </div>
 
   <script>
@@ -46,37 +128,47 @@
     const submit = document.getElementById('submit');
     const feedback = document.getElementById('feedback');
 
-    play.addEventListener('click', ()=> audio.play());
-    pause.addEventListener('click', ()=> audio.pause());
-    replay.addEventListener('click', ()=>{ audio.currentTime = 0; audio.play(); });
+    play.addEventListener('click', () => audio.play());
+    pause.addEventListener('click', () => audio.pause());
+    replay.addEventListener('click', () => { audio.currentTime = 0; audio.play(); });
 
-    // correct answer (adjust to the exact spelling you want accepted)
-    const correct = "clue movie example"; // <-- replace this with the correct movie name
+    // correct answer
+    const correct = "clue movie example";
 
     submit.addEventListener('click', checkAnswer);
-    document.getElementById('answer').addEventListener('keydown', (e)=>{ if(e.key === 'Enter') checkAnswer(); });
+    document.getElementById('answer').addEventListener('keydown', (e)=>{ 
+      if(e.key === 'Enter') checkAnswer(); 
+    });
 
-    function normalize(s){
+    function normalize(s) {
       return s.trim().toLowerCase();
     }
 
-    function checkAnswer(){
+    function checkAnswer() {
       const user = normalize(document.getElementById('answer').value || '');
-      if(!user){ feedback.textContent = 'Please enter an answer.'; return; }
 
-      if(user === normalize(correct)){
-        // success — redirect to success.html
-        window.location.href = 'success.html';
+      if (!user) {
+        feedback.textContent = "Please enter an answer.";
+        return;
+      }
+
+      if (user === normalize(correct)) {
+        window.location.href = "success.html";
       } else {
-        feedback.textContent = 'Incorrect — try listening again or check spelling.';
-        // small shake animation hint
+        feedback.textContent = "Incorrect — listen again or check spelling.";
+
+        // shake animation
         const el = document.getElementById('answer');
-        el.animate([{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }], { duration: 240, iterations: 1 });
+        el.animate(
+          [
+            { transform: 'translateX(-6px)' },
+            { transform: 'translateX(6px)' },
+            { transform: 'translateX(0)' }
+          ],
+          { duration: 240, iterations: 1 }
+        );
       }
     }
-
-    // Accessibility: focus input after first play
-    play.addEventListener('click', ()=> document.getElementById('answer').focus());
   </script>
 </body>
 </html>
