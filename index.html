@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emoji Movie Puzzle - Clue 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎬 Emoji Movie Puzzle – Clue Set 1</h2>
+        <p>Solve the emojis and enter the correct movie names.</p><h3>🔹 Emoji Clues:</h3>
+    <p>1️⃣ 🎭🏡</p>
+    <input id="ans1" placeholder="Movie Name" />
+
+    <p>2️⃣ 🇮🇳🇨🇦</p>
+    <input id="ans2" placeholder="Movie Name" />
+
+    <p>3️⃣ 👑👴</p>
+    <input id="ans3" placeholder="Movie Name" />
+
+    <button onclick="checkAnswers()">Submit</button>
+</div>
+
+<script>
+    function checkAnswers() {
+        const a1 = document.getElementById("ans1").value.trim().toLowerCase();
+        const a2 = document.getElementById("ans2").value.trim().toLowerCase();
+        const a3 = document.getElementById("ans3").value.trim().toLowerCase();
+
+        if (
+            a1 === "punjabi house" &&
+            a2 === "two countries" &&
+            a3 === "the king"
+        ) {
+            window.location.href = "next_clue.html";
+        } else {
+            alert("❌ One or more answers are incorrect. Try again!");
+        }
+    }
+</script>
+
+</body>
+</html
