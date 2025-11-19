@@ -45,14 +45,20 @@
     <div class="container">
         <h2>🎬 Emoji Movie Puzzle – Clue Set 1</h2>
         <p>Solve the emojis and enter the correct movie names.</p><h3>🔹 Emoji Clues:</h3>
-    <p>1️⃣ 🎭🏡</p>
+    <p>🖐🏻🏳‍🌈🦜 </p>
     <input id="ans1" placeholder="Movie Name" />
 
-    <p>2️⃣ 🇮🇳🇨🇦</p>
+    <p>🌧️ 💦 🔔 </p>
     <input id="ans2" placeholder="Movie Name" />
 
-    <p>3️⃣ 👑👴</p>
+    <p>👳🏻‍♂️🏠</p>
     <input id="ans3" placeholder="Movie Name" />
+    
+    <p>🦜&#x1F444;🥭</p>
+    <input id="ans4" placeholder="Movie Name" />
+
+    <p>&#x2B1B;&#x1F408;&#x200D;</p>
+    <input id="ans5" placeholder="Movie Name" />
 
     <button onclick="checkAnswers()">Submit</button>
 </div>
@@ -62,11 +68,15 @@
         const a1 = document.getElementById("ans1").value.trim().toLowerCase();
         const a2 = document.getElementById("ans2").value.trim().toLowerCase();
         const a3 = document.getElementById("ans3").value.trim().toLowerCase();
+        const a4 = document.getElementById("ans4").value.trim().toLowerCase();
+        const a5 = document.getElementById("ans5").value.trim().toLowerCase();
 
         if (
-            a1 === "punjabi house" &&
-            a2 === "two countries" &&
-            a3 === "the king"
+            a1 === "panchavarnathatha" &&
+            a2 === "mazhathullikkillukkam" &&
+            a3 === "punjabi house" &&
+            a4 === "kilichundan mambazham" && 
+            a5 === "black cat" 
         ) {
             window.location.href = "next_clue.html";
         } else {
